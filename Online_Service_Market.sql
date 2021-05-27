@@ -9,6 +9,19 @@ create table service_provider(
 	primary key (username)
 );
 
+insert into service_provider (username, passwrd, address_on_social_networks, phone_number, licence_number, start_year, 
+								location_range_of_service)
+		values  ('Mohsen_Hosseini', 'pAssword4', 'MohHoss', '09141468677', '723986459', '2015-12-17', 'Pasdaran, Azadi, Navvab');
+			
+insert into service_provider (username, passwrd, address_on_social_networks, phone_number, location_range_of_service)
+		values  ('MahdiASh', '12344321', 'MA1379', '09222702476', 'Jamalzadeh, Shahr e Rey, Tajrish, Azadegan, Mehrabad');
+
+insert into service_provider (username, passwrd, phone_number, location_range_of_service)
+		values  ('SamanMR', '87654321', '09105983290', 'Lalehzar, Naziabad, Yaftabad, Meydan Resalat, Piroozi');
+
+insert into service_provider (username, passwrd, licence_number, start_year)
+		values  ('MMHashemi1379', '13792000', '3452134', '2013-5-4');
+
 create table gallery(
 	photo image not null,
 	photo_id int identity(10000, 1),
