@@ -23,7 +23,7 @@ insert into service_provider (username, passwrd, licence_number, start_year)
 		values  ('MMHashemi1379', '13792000', '3452134', '2013-5-4');
 
 create table gallery(
-	photo image not null,
+	photo_dir varchar(300) not null,
 	photo_id int identity(10000, 1),
 	username varchar(50) not null,
 	primary key (photo_id, username),
