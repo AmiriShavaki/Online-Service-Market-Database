@@ -20,7 +20,16 @@ insert into service_provider (username, passwrd, phone_number, location_range_of
 		values  ('SamanMR', '87654321', '09105983290', 'Lalehzar, Naziabad, Yaftabad, Meydan Resalat, Piroozi');
 
 insert into service_provider (username, passwrd, licence_number, start_year)
-		values  ('MMHashemi1379', '13792000', '3452134', '2013-5-4');
+		values  ('MHashemi1379', '13792000', '3452134', '2013-5-4');
+
+insert into service_provider (username, passwrd, address_on_social_networks, phone_number)
+		values ('Ayandeh_Ziba', 'DontHackMePls', 'AyandeRoshanAstDDD', '02144124124')
+
+insert into service_provider (username, passwrd, phone_number, location_range_of_service)
+		values ('PorkaranePortalash', '12345678', '0212323233', 'Pasdaran, Monirye, Tajrish, Darvazeh ghaar')
+
+insert into service_provider (username, passwrd, phone_number)
+		values ('NoandishaneSaee', '14253462', '+989123123132')
 
 create table gallery(
 	photo_dir varchar(300) not null,
@@ -41,12 +50,34 @@ create table specialist(
 	foreign key (username) references service_provider(username)
 );
 
+insert into specialist (first_name, last_name, gender, age, degree_of_education, username)
+	values ('Mohsen', 'Hosseini', 'male', 92, 'Master of Electronic Engineering from Iran University of Science and Technology',
+			'Mohsen_Hosseini');
+
+insert into specialist (last_name, gender, age, username)
+	values ('Amiri Shavaki', 'male', 21, 'MahdiASh');
+
+insert into specialist (first_name, last_name, gender, age, username)
+	values ('Saman', 'Mohammadi Raouf', 'male', 21, 'SamanMR');
+
+insert into specialist (first_name, last_name, gender, degree_of_education, username)
+	values ('Maryam', 'Hashemi', 'female', 'Bachelors of Computer Engineering from Sharif University of Technology', 'MHashemi1379');
+
 create table company(
 	website varchar(100),
 	username varchar(50) not null,
 	primary key (username),
 	foreign key (username) references service_provider(username)
 );
+
+insert into company (website, username)
+	values ('www.FardasazanAyandehZiba.ir', 'Ayandeh_Ziba');
+
+insert into company (username)
+	values ('PorkaranePortalash');
+
+insert into company (username)
+	values ('NoandishaneSaee');
 
 create table company_manager(
 	first_name nvarchar(100),
@@ -55,6 +86,15 @@ create table company_manager(
 	primary key (company_username),
 	foreign key (company_username) references company(username)
 );
+
+insert into company_manager (first_name, last_name, company_username)
+	values ('Hossein', 'Rahmani', 'Ayandeh_Ziba');
+
+insert into company_manager (first_name, last_name, company_username)
+	values ('Sina', 'Ziaee', 'PorkaranePortalash');
+
+insert into company_manager (last_name, company_username)
+	values ('Shoeibi', 'NoandishaneSaee');
 
 create table client(
 	first_name nvarchar(100),
@@ -65,6 +105,18 @@ create table client(
 	passwrd varchar(50) not null,
 	primary key(username)
 );
+
+insert into client (first_name, last_name, phone_number, wallet_value, username, passwrd)
+	values ('Melika', 'Nobakhtian', '+989131231231', 100.2, 'MeliNo', 'perspolis');
+
+insert into client (first_name, last_name, wallet_value, username, passwrd)
+	values ('Seyed Mahdi', 'Razavi', 3124.123, 'SMR', 'AlAla1234');
+
+insert into client (last_name, phone_number, wallet_value, username, passwrd)
+	values ('Motevaseli', '+989123123456', 234.23, 'mot1998_1234', 'AStrongPassword');
+
+insert into client (last_name, phone_number, wallet_value, username, passwrd)
+	values ('Ramezani', '+9891249772309', 0, 'Sajj_R', 'Pass1234');
 
 create table initial_order(
 	description_of_requested_work nvarchar(2000) not null,
