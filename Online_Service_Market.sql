@@ -61,23 +61,33 @@ insert into specialist (first_name, last_name, gender, age, username)
 	values ('Saman', 'Mohammadi Raouf', 'male', 21, 'SamanMR');
 
 insert into specialist (first_name, last_name, gender, degree_of_education, username)
-	values ('Maryam', 'Hashemi', 'female', 'Bachelors of Computer Engineering from Sharif University of Technology', 'MHashemi1379');
+	values ('Maryam', 'Hashemi', 'female', 'Bachelors of Computer Engineering from Sharif University of Technology', 'MHashemi1379'); 
+
+select * from specialist;
+delete from specialist where gender = 'female';
+select * from specialist;
 
 create table company(
-	website varchar(100),
+	/*website varchar(100),*/
 	username varchar(50) not null,
 	primary key (username),
 	foreign key (username) references service_provider(username)
 );
 
-insert into company (website, username)
-	values ('www.FardasazanAyandehZiba.ir', 'Ayandeh_Ziba');
+insert into company (username)
+	values ('Ayandeh_Ziba');
 
 insert into company (username)
 	values ('PorkaranePortalash');
 
 insert into company (username)
 	values ('NoandishaneSaee');
+
+select * from company;
+alter table company add website varchar(100);
+select * from company;
+update company set website = 'www.FardasazanAyandehZiba.ir' where username = 'Ayandeh_Ziba';
+select * from company;
 
 create table company_manager(
 	first_name nvarchar(100),
