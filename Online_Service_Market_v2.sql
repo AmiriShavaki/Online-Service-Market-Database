@@ -1,4 +1,4 @@
-﻿use [Online Web Store];
+﻿
 create table service_provider(
 	username varchar(50) not null,
 	passwrd varchar(50) not null,

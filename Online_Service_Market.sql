@@ -331,6 +331,35 @@ select position_name
 from position,cleaning_service
 where cleaning_service.clean_service_name=position.cleaning_service;
 
+
+/*alter*/
+alter table position add position_area nvarchar;
+/*check this query later. i wanted to copy all of the values from approximate area to position area*/
+update position
+set position_area =
+(select approximate_area_value
+from cleaning_service
+where position.cleaning_service=cleaning_service.clean_service_name);
+
+alter table s_service add kindOfService nvarchar;
+
+update s_service
+set kindOfService = 'car_services'
+where s_service.s_name in (select car_service.c_service_name from car_service);
+
+update s_service
+set kinfOfService = 'non_electric_kitchen_services'
+where s_service.s_name in (select non_electric_kitchen_service.k_service_name from non_electric_kitchen_service);
+
+update s_service
+set kinfOfService = 'electric_services'
+where s_service.s_name in (select electric_service.e_service_name from electric_service);
+
+update s_service
+set kinfOfService = 'cleaning_services'
+where s_service.s_name in (select cleaning_service.clean_service_name from cleaning_service);
+
+
 /*insertion to table*/
 
 /*long term contracts*/
@@ -555,6 +584,20 @@ where device_name='ps4' AND electric_service=N'تعمیرات کنسول باز�
 
 select * from device;
 
+
+
+/*delet from table */
+delete from long_term_contract where service_provider='Mohsen_Hosseini';
+select * from long_term_contract;
+
+delete from s_service where s_name='تعمیر ماشین رنو';
+select * from s_service;
+
+delete from device where device_name='PlayStation5';
+select * from device;
+
+
+/*drop table */
 drop table long_term_contract;
 drop table provides;
 drop table s_service;
