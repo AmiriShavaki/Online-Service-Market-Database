@@ -32,16 +32,28 @@ insert into service_provider (username, passwrd, phone_number, location_range_of
 insert into service_provider (username, passwrd, phone_number)
 		values ('NoandishaneSaee', '14253462', '+989123123132');
 
-select * from service_provider;/*---------------------------------------------------------------------*/
+--select * from service_provider;/*---------------------------------------------------------------------*/
 
 
 create table gallery(
-	photo_dir varchar(300) not null,
+	photo_url varchar(300) not null,
 	photo_id int identity(10000, 1),
 	username varchar(50) not null,
 	primary key (photo_id, username),
 	foreign key (username) references service_provider(username)
 );
+
+insert into gallery (photo_url, username)
+	values ('https://cdn.bartarinha.ir/files/fa/news/1398/7/20/2180290_566.jpg', 'Mohsen_Hosseini');
+
+insert into gallery (photo_url, username)
+	values ('https://ipemdad.com/wp-content/uploads/2020/12/%D8%AA%D8%B9%D9%85%DB%8C%D8%B1-%D8%AA%D9%84%D9%88%DB%8C%D8%B2%DB%8C%D9%88%D9%86.webp', 'MahdiASh');
+
+insert into gallery (photo_url, username)
+	values ('https://repaire24.ir/media/k2/items/cache/2f2766fb7d5da7e6231d9ac592175eb3_XL.jpg', 'SamanMR');
+
+insert into gallery (photo_url, username)
+	values ('https://homeservize.com/blog1/wp-content/uploads/2020/10/installing-cabinets.jpg', 'MHashemi1379');
 
 create table specialist(
 	first_name nvarchar(100),
@@ -67,10 +79,6 @@ insert into specialist (first_name, last_name, gender, age, username)
 insert into specialist (first_name, last_name, gender, degree_of_education, username)
 	values ('Maryam', 'Hashemi', 'female', 'Bachelors of Computer Engineering from Sharif University of Technology', 'MHashemi1379');
 
-select * from specialist;
-delete from specialist where gender = 'female';
-select * from specialist;
-
 create table company(
 	/*website varchar(100),*/
 	username varchar(50) not null,
@@ -86,12 +94,6 @@ insert into company (username)
 
 insert into company (username)
 	values ('NoandishaneSaee');
-
-select * from company;
-alter table company add website varchar(100);
-select * from company;
-update company set website = 'www.FardasazanAyandehZiba.ir' where username = 'Ayandeh_Ziba';
-select * from company;
 
 create table company_manager(
 	first_name nvarchar(100),
@@ -110,7 +112,7 @@ insert into company_manager (first_name, last_name, company_username)
 insert into company_manager (last_name, company_username)
 	values ('Shoeibi', 'NoandishaneSaee');
 
-select * from company_manager;/*--------------------------------------------------*/
+--select * from company_manager;/*--------------------------------------------------*/
 create table client(
 	first_name nvarchar(100),
 	last_name nvarchar(100) not null,
@@ -133,7 +135,7 @@ insert into client (last_name, phone_number, wallet_value, username, passwrd)
 insert into client (last_name, phone_number, wallet_value, username, passwrd)
 	values ('Ramezani', '+9891249772309', 0, 'Sajj_R', 'Pass1234');
 
-select * from client;/*-----------------------------------------*/
+--select * from client;/*-----------------------------------------*/
 
 create table initial_order(
 	description_of_requested_work nvarchar(2000) not null,
@@ -244,7 +246,7 @@ create table electric_service
 create table device
 (
 	device_name nvarchar(100) not null unique,
-	electric_service nvarchar(100) not null unique,
+	electric_service nvarchar(100) not null,
 	primary key(electric_service,device_name),
 	foreign key(electric_service) references electric_service(e_service_name)
 );
@@ -280,7 +282,7 @@ values ('2008-11-29',12567212,'mot1998_1234','SamanMR');
 insert into long_term_contract(register_time,priod,client,service_provider)
 values ('2008-10-09',12898121,'Sajj_R','MHashemi1379');
 
-select * from long_term_contract;
+--select * from long_term_contract;
 
 
 /*services*/
@@ -348,7 +350,7 @@ insert into provides(service_names,service_provider_username)
 values (N'تعمیر ماشین ایران خودرو','Mohsen_Hosseini');
 
 
-select * from provides;
+--select * from provides;
 
 
 
@@ -366,7 +368,7 @@ insert into car_service(c_service_name)
 values (N'تعمیر ماشین پژو');
 
 
-select * from car_service;
+--select * from car_service;
 /*vehicle*/
 insert into vehicle(vehicle_name,car_service)
 values (N'تندر',N'تعمیر ماشین ایران خودرو');
@@ -380,7 +382,7 @@ values (N'تیبا',N'تعمیر ماشین پراید');
 insert into vehicle(vehicle_name,car_service)
 values (N'206',N'تعمیر ماشین پژو');
 
-select * from vehicle;
+--select * from vehicle;
 /*non_electric_kitchen_service*/
 insert into non_electric_kitchen_service(k_service_name)
 values(N'تعمیر کابینت');
@@ -392,7 +394,7 @@ insert into non_electric_kitchen_service(k_service_name)
 values(N'تعمیر لوله آشپزخونه');
 
 
-select * from non_electric_kitchen_service;
+--select * from non_electric_kitchen_service;
 
 insert into home_appliances(appliances_name,non_electric_kitchen_service)
 values(N'کابینت',N'تعمیر کابینت');
@@ -403,7 +405,7 @@ values(N'سینک ظرف شویی',N'تعمیر سینک');
 insert into home_appliances(appliances_name,non_electric_kitchen_service)
 values(N'لوله های آب در آشپزخونه',N'تعمیر لوله آشپزخونه');
 
-select * from home_appliances;
+--select * from home_appliances;
 
 insert into electric_service(e_service_name)
 values(N'تعمیرات موبایل');
@@ -412,21 +414,24 @@ insert into electric_service(e_service_name)
 values(N'تعمیرات کامپیوتر');
 
 insert into electric_service(e_service_name)
+values(N'تعمیرات لپتاپ');
+
+insert into electric_service(e_service_name)
 values(N'تعمیرات کنسول بازی');
 
 insert into electric_service(e_service_name)
 values(N'تعمیر تلویزیون ');
 
-select * from electric_service;
+--select * from electric_service;
 
 insert into device(device_name,electric_service)
 values(N'S10',N'تعمیرات موبایل');
 
-/*insert into device(device_name,electric_service)
-values(N'S9',N'تعمیرات موبایل');*//*------------------------why error??-----------------------------------*/
+insert into device(device_name,electric_service)
+values(N'S9',N'تعمیرات موبایل');
 
-/*insert into device(device_name,electric_service)
-values(N'S8',N'تعمیرات موبایل');*//*-------------------------why error??----------------------------------*/
+insert into device(device_name,electric_service)
+values(N'S8',N'تعمیرات موبایل');
 
 insert into device(device_name,electric_service)
 values(N'ps4',N'تعمیرات کنسول بازی');
@@ -434,11 +439,10 @@ values(N'ps4',N'تعمیرات کنسول بازی');
 insert into device(device_name,electric_service)
 values(N'LG7s',N'تعمیر تلویزیون ');
 
-/*insert into device(device_name,electric_service)
-values(N'ideapad 330s',N'تعمیرات لپتاپ');*//*-------------------------why error??--------------------------------*/
+insert into device(device_name,electric_service)
+values(N'ideapad 330s',N'تعمیرات لپتاپ');
 
-
-select * from device;
+--select * from device;
 
 insert into cleaning_service(clean_service_name,approximate_area_value)
 values(N'شستن پنجره',N'ده تا دو در دو')
@@ -446,7 +450,7 @@ values(N'شستن پنجره',N'ده تا دو در دو')
 insert into cleaning_service(clean_service_name,approximate_area_value)
 values(N'نظافت کف منزل',N'60m^2');
 
-select * from cleaning_service;
+--select * from cleaning_service;
 
 insert into position(position_name,cleaning_service)
 values(N'پنجره های اتاق خواب پذیرایی آشپزخونه',N'شستن پنجره');
@@ -454,7 +458,7 @@ values(N'پنجره های اتاق خواب پذیرایی آشپزخونه',N'
 insert into position(position_name,cleaning_service)
 values(N'کف منزل',N'نظافت کف منزل');
 
-select * from position;
+--select * from position;
 
 
 /*--------------------------simple queries----------------------------------*/
@@ -500,6 +504,17 @@ where cleaning_service.clean_service_name=position.cleaning_service;
 
 
 /*---------------------------update queries--------------------------------*/
+
+select * from specialist;
+delete from specialist where gender = 'female';
+select * from specialist;
+
+select * from company;
+alter table company add website varchar(100);
+select * from company;
+update company set website = 'www.FardasazanAyandehZiba.ir' where username = 'Ayandeh_Ziba';
+select * from company;
+
 update long_term_contract
 set register_time = GETDATE()
 where year(register_time)='2008';
