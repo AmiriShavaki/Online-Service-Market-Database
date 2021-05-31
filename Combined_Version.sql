@@ -193,8 +193,12 @@ create table long_term_contract
 	service_provider varchar(50) not null,
 	primary key (contract_id),
 	foreign key(client) references client(username),/*used another table from another part------high possibility of error*/
-	foreign key(service_provider) references service_provider(username)/*used another table from another part------high possibility of error*/
+	foreign key(service_provider) references service_provider(username), /*used another table from another part------high possibility of error*/
+	check (priod > 10000)
 );
+
+/*insert into long_term_contract(register_time, priod, client, service_provider)
+	values ('2008-10-29', 1000, 'MeliNo', 'Mohsen_Hosseini'); not valid insert just to test check constraint*/
 
 create table s_service
 (
