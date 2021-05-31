@@ -212,6 +212,18 @@ create table picks(
 	foreign key (service_provider) references service_provider(username)
 );
 
+insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
+	values ('MeliNo', 10003, 'MeliNo', 'SamanMR');
+
+insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
+	values ('SMR', 10001, 'SMR', 'MHashemi1379');
+
+insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
+	values ('mot1998_1234', 10002, 'mot1998_1234', 'Mohsen_Hosseini');
+
+insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
+	values ('Sajj_R', 10000, 'Sajj_R', 'MahdiASh');
+
 /*part_2*//*--------------------------------create table-----------------------------------*/
 create table long_term_contract
 (
