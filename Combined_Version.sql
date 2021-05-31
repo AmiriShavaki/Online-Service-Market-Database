@@ -155,7 +155,8 @@ create table finalized_order(
 	initial_order_estimation_price_request varchar(50) not null,
 	id int identity,
 	primary key(initial_order_id, initial_order_estimation_price_request, id),
-	foreign key (initial_order_id, initial_order_estimation_price_request) references initial_order(id, estimation_price_request)
+	foreign key (initial_order_id, initial_order_estimation_price_request) references initial_order(id, estimation_price_request),
+	check (rating >= 0 and rating <= 5)
 );
 
 insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
@@ -163,6 +164,9 @@ insert into finalized_order (client_comment, rating, price, initial_order_id, in
 	(N'خیلی دیر اومد آخرش هم پونصد تومن اضافه تر گرفت', 1, 923.12, 10001, 'SMR'),
 	(N'فعلا که ماشینم راه افتاده ولی خیلی بداخلاق بود می‌ترسیدم باهاش حرف بزنم!', 3, 123, 10002, 'mot1998_1234'),
 	(N'خیلی خوبن واقعا دست و پنجه شون درد نکنه باادب و خوش اخلاق و کاربلد', 5, 2134, 10003, 'MeliNo');
+
+/*insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
+	values(N'خیلی خیلی عالی', 100, 2000, 10003, 'MeliNo'); check constraint*/
 
 create table picks(
 	client varchar(50) not null,
@@ -554,14 +558,6 @@ where service_provider_username='SamanMR';
 
 select * from provides;
 
-/*update provides
-set service_names=N'تعمیرات پکیج آب گرم کن'
-where service_names=N'تعمیر  آب گرم کن';
-
-update s_service,
-set s_name = N'تعمیرات پکیج آب گرم کن'
-where s_name=N'تعمیر  آب گرم کن';*//*how to make it ok????*/
-
 select * from s_service;
 
 update device
@@ -569,7 +565,6 @@ set device_name='Lenovo IdeaPad330s'
 where device_name='ideapad 330s';
 
 select * from device;
-
 
 update device
 set device_name='PlayStation5'
