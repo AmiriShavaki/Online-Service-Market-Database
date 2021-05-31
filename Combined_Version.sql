@@ -394,7 +394,7 @@ insert into provides(service_names,service_provider_username)
 values (N'تعمیر کابینت','MHashemi1379');
 
 insert into provides(service_names,service_provider_username)
-values (N'تعمیر ماشین ایران خودرو','Mohsen_Hosseini');
+values (N'تعمیر ماشین رنو','Mohsen_Hosseini');
 
 
 --select * from provides;
