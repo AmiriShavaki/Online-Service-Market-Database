@@ -461,7 +461,7 @@ values(N'کف منزل',N'نظافت کف منزل');
 --select * from position;
 
 
-/*--------------------------simple queries----------------------------------*/
+/*--------------------------simple select queries----------------------------------*/
 
 select register_time,priod,client,service_provider
 from long_term_contract;
@@ -500,8 +500,26 @@ from cleaning_service;
 select position_name
 from position,cleaning_service
 where cleaning_service.clean_service_name=position.cleaning_service;
+/*---------------------------complicated select queries-----------------------------------------------*/
+select * from service_provider inner join provides on service_provider.username=provides.service_provider_username;
 
+select * from car_service inner join vehicle on car_service.c_service_name=vehicle.car_service;
 
+select * from non_electric_kitchen_service inner join home_appliances
+on non_electric_kitchen_service.k_service_name=home_appliances.non_electric_kitchen_service
+where k_service_name<>N'تعمیر سینک';
+
+select * from electric_service inner join device on device.electric_service=electric_service.e_service_name;
+
+select * from cleaning_service inner join position on cleaning_service.clean_service_name=position.cleaning_service;
+
+select * from client
+where wallet_value>(select avg(wallet_value) from client);
+
+select * from service_provider ,provides,car_service,s_service
+where service_provider.username=provides.service_provider_username
+and provides.service_names=s_service.s_name
+and s_service.s_name=car_service.c_service_name;
 
 /*---------------------------update queries--------------------------------*/
 
