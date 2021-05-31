@@ -145,6 +145,18 @@ create table initial_order(
 	foreign key (estimation_price_request) references client(username)
 );
 
+insert into initial_order (description_of_requested_work, estimation_price_request)
+	values (N'لامپ تلویزیون شکسته و فقط نصفش روشن میشه بقیه ی صفحه کاملا تاریک و خاموشه، تلویزیون ۴۰ اینچ ال جی', 'Sajj_R');
+
+insert into initial_order (description_of_requested_work, estimation_price_request)
+	values (N'در کابینت خراب شده و لقی داره وقتی بازش می کنیم خیلی به سمت پایین کج می مونه', 'SMR');
+
+insert into initial_order (description_of_requested_work, estimation_price_request)
+	values (N'ماشینم استارت نمی خوره، بنزین داره و تسمه اش هم تازه عوض کردم نمی دونم چش شده', 'mot1998_1234');
+
+insert into initial_order (description_of_requested_work, estimation_price_request)
+	values (N'لوله ی آبگرمکن ترکیده و خیلی چکه می کنه حسابی آشپزخونه رو بو انداخته', 'MeliNo');
+
 create table estimate_price(
 	initial_order_id int not null,
 	initial_order_estimation_price_request varchar(50) not null,
@@ -154,6 +166,18 @@ create table estimate_price(
 	foreign key (service_provider) references service_provider(username),
 	foreign key (initial_order_id, initial_order_estimation_price_request) references initial_order(id, estimation_price_request)
 );
+
+insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
+	values ('10000', 'Sajj_R', 'MahdiASh', 2291.48);
+
+insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
+	values ('10001', 'SMR', 'MHashemi1379', 412.32);
+
+insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
+	values ('10002', 'mot1998_1234', 'Mohsen_Hosseini', 123.23);
+
+insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
+	values ('10003', 'MeliNo', 'SamanMR', 1243.00);
 
 create table finalized_order(
 	client_comment nvarchar(2000),
