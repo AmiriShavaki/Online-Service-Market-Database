@@ -11,7 +11,9 @@
 
 insert into service_provider (username, passwrd, address_on_social_networks, phone_number, licence_number, start_year, 
 								location_range_of_service)
-		values  ('Mohsen_Hosseini', 'pAssword4', 'MohHoss', '09141468677', '723986459', '2015-12-17', 'Pasdaran, Azadi, Navvab');
+		values  ('Mohsen_Hosseini', 'pAssword4', 'MohHoss', '09141468677', '723986459', '2015-12-17', 'Pasdaran, Azadi, Navvab'),
+			('RezMosav', 'IndComp', 'R_Mos', '09234123451', '23451927', '2019-2-1', 'Shemiran, Shoush, Molavi, Narmak, Vanak'),
+			('Nasiri', 'NotFound1234', 'Nasir1234', '09123452356', '23534612', '2018-3-12', 'Meydon Hor, Roudaki, Mosalla');
 			
 insert into service_provider (username, passwrd, address_on_social_networks, phone_number, location_range_of_service)
 		values  ('MahdiASh', '12344321', 'MA1379', '09222702476', 'Jamalzadeh, Shahr e Rey, Tajrish, Azadegan, Mehrabad');
