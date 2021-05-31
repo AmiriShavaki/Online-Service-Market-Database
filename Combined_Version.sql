@@ -33,9 +33,6 @@ insert into service_provider (username, passwrd, phone_number, location_range_of
 insert into service_provider (username, passwrd, phone_number)
 		values ('NoandishaneSaee', '14253462', '+989123123132');
 
---select * from service_provider;/*---------------------------------------------------------------------*/
-
-
 create table gallery(
 	photo_url varchar(300) not null,
 	photo_id int identity(10000, 1),
@@ -45,16 +42,10 @@ create table gallery(
 );
 
 insert into gallery (photo_url, username)
-	values ('https://cdn.bartarinha.ir/files/fa/news/1398/7/20/2180290_566.jpg', 'Mohsen_Hosseini');
-
-insert into gallery (photo_url, username)
-	values ('https://ipemdad.com/wp-content/uploads/2020/12/%D8%AA%D8%B9%D9%85%DB%8C%D8%B1-%D8%AA%D9%84%D9%88%DB%8C%D8%B2%DB%8C%D9%88%D9%86.webp', 'MahdiASh');
-
-insert into gallery (photo_url, username)
-	values ('https://repaire24.ir/media/k2/items/cache/2f2766fb7d5da7e6231d9ac592175eb3_XL.jpg', 'SamanMR');
-
-insert into gallery (photo_url, username)
-	values ('https://homeservize.com/blog1/wp-content/uploads/2020/10/installing-cabinets.jpg', 'MHashemi1379');
+	values ('https://cdn.bartarinha.ir/files/fa/news/1398/7/20/2180290_566.jpg', 'Mohsen_Hosseini'),
+	('https://ipemdad.com/wp-content/uploads/2020/12/%D8%AA%D8%B9%D9%85%DB%8C%D8%B1-%D8%AA%D9%84%D9%88%DB%8C%D8%B2%DB%8C%D9%88%D9%86.webp', 'MahdiASh'),
+	('https://repaire24.ir/media/k2/items/cache/2f2766fb7d5da7e6231d9ac592175eb3_XL.jpg', 'SamanMR'),
+	('https://homeservize.com/blog1/wp-content/uploads/2020/10/installing-cabinets.jpg', 'MHashemi1379');
 
 create table specialist(
 	first_name nvarchar(100),
@@ -81,20 +72,14 @@ insert into specialist (first_name, last_name, gender, degree_of_education, user
 	values ('Maryam', 'Hashemi', 'female', 'Bachelors of Computer Engineering from Sharif University of Technology', 'MHashemi1379');
 
 create table company(
-	/*website varchar(100),*/
+	/*website varchar(100) this att will be added to company table once we use an alter command later*/
 	username varchar(50) not null,
 	primary key (username),
 	foreign key (username) references service_provider(username)
 );
 
 insert into company (username)
-	values ('Ayandeh_Ziba');
-
-insert into company (username)
-	values ('PorkaranePortalash');
-
-insert into company (username)
-	values ('NoandishaneSaee');
+	values ('Ayandeh_Ziba'), ('PorkaranePortalash'), ('NoandishaneSaee');
 
 create table company_manager(
 	first_name nvarchar(100),
@@ -105,15 +90,11 @@ create table company_manager(
 );
 
 insert into company_manager (first_name, last_name, company_username)
-	values ('Hossein', 'Rahmani', 'Ayandeh_Ziba');
-
-insert into company_manager (first_name, last_name, company_username)
-	values ('Sina', 'Ziaee', 'PorkaranePortalash');
+	values ('Hossein', 'Rahmani', 'Ayandeh_Ziba'), ('Sina', 'Ziaee', 'PorkaranePortalash');
 
 insert into company_manager (last_name, company_username)
 	values ('Shoeibi', 'NoandishaneSaee');
 
---select * from company_manager;/*--------------------------------------------------*/
 create table client(
 	first_name nvarchar(100),
 	last_name nvarchar(100) not null,
@@ -136,8 +117,6 @@ insert into client (last_name, phone_number, wallet_value, username, passwrd)
 insert into client (last_name, phone_number, wallet_value, username, passwrd)
 	values ('Ramezani', '+9891249772309', 0, 'Sajj_R', 'Pass1234');
 
---select * from client;/*-----------------------------------------*/
-
 create table initial_order(
 	description_of_requested_work nvarchar(2000) not null,
 	estimation_price_request varchar(50) not null,
@@ -147,16 +126,10 @@ create table initial_order(
 );
 
 insert into initial_order (description_of_requested_work, estimation_price_request)
-	values (N'لامپ تلویزیون شکسته و فقط نصفش روشن میشه بقیه ی صفحه کاملا تاریک و خاموشه، تلویزیون ۴۰ اینچ ال جی', 'Sajj_R');
-
-insert into initial_order (description_of_requested_work, estimation_price_request)
-	values (N'در کابینت خراب شده و لقی داره وقتی بازش می کنیم خیلی به سمت پایین کج می مونه', 'SMR');
-
-insert into initial_order (description_of_requested_work, estimation_price_request)
-	values (N'ماشینم استارت نمی خوره، بنزین داره و تسمه اش هم تازه عوض کردم نمی دونم چش شده', 'mot1998_1234');
-
-insert into initial_order (description_of_requested_work, estimation_price_request)
-	values (N'لوله ی آبگرمکن ترکیده و خیلی چکه می کنه حسابی آشپزخونه رو بو انداخته', 'MeliNo');
+	values (N'لامپ تلویزیون شکسته و فقط نصفش روشن میشه بقیه ی صفحه کاملا تاریک و خاموشه، تلویزیون ۴۰ اینچ ال جی', 'Sajj_R'),
+	(N'در کابینت خراب شده و لقی داره وقتی بازش می کنیم خیلی به سمت پایین کج می مونه', 'SMR'),
+	(N'ماشینم استارت نمی خوره، بنزین داره و تسمه اش هم تازه عوض کردم نمی دونم چش شده', 'mot1998_1234'),
+	(N'لوله ی آبگرمکن ترکیده و خیلی چکه می کنه حسابی آشپزخونه رو بو انداخته', 'MeliNo');
 
 create table estimate_price(
 	initial_order_id int not null,
@@ -186,16 +159,10 @@ create table finalized_order(
 );
 
 insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
-	values (N'کارشون رو سریع انجام دادن و الان تلویزیونم خیلی خوب شده مثل روز اولش دستشون درد نکنه', 5, 2789.67, 10000, 'Sajj_R');
-
-insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
-	values (N'خیلی دیر اومد آخرش هم پونصد تومن اضافه تر گرفت', 1, 923.12, 10001, 'SMR');
-
-insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
-	values (N'فعلا که ماشینم راه افتاده ولی خیلی بداخلاق بود می‌ترسیدم باهاش حرف بزنم!', 3, 123, 10002, 'mot1998_1234');
-
-insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
-	values (N'خیلی خوبن واقعا دست و پنجه شون درد نکنه باادب و خوش اخلاق و کاربلد', 5, 2134, 10003, 'MeliNo');
+	values (N'کارشون رو سریع انجام دادن و الان تلویزیونم خیلی خوب شده مثل روز اولش دستشون درد نکنه', 5, 2789.67, 10000, 'Sajj_R'),
+	(N'خیلی دیر اومد آخرش هم پونصد تومن اضافه تر گرفت', 1, 923.12, 10001, 'SMR'),
+	(N'فعلا که ماشینم راه افتاده ولی خیلی بداخلاق بود می‌ترسیدم باهاش حرف بزنم!', 3, 123, 10002, 'mot1998_1234'),
+	(N'خیلی خوبن واقعا دست و پنجه شون درد نکنه باادب و خوش اخلاق و کاربلد', 5, 2134, 10003, 'MeliNo');
 
 create table picks(
 	client varchar(50) not null,
@@ -209,16 +176,8 @@ create table picks(
 );
 
 insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
-	values ('MeliNo', 10003, 'MeliNo', 'SamanMR');
-
-insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
-	values ('SMR', 10001, 'SMR', 'MHashemi1379');
-
-insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
-	values ('mot1998_1234', 10002, 'mot1998_1234', 'Mohsen_Hosseini');
-
-insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
-	values ('Sajj_R', 10000, 'Sajj_R', 'MahdiASh');
+	values ('MeliNo', 10003, 'MeliNo', 'SamanMR'), ('SMR', 10001, 'SMR', 'MHashemi1379'),
+	('mot1998_1234', 10002, 'mot1998_1234', 'Mohsen_Hosseini'), ('Sajj_R', 10000, 'Sajj_R', 'MahdiASh');
 
 /*part_2*//*--------------------------------create table-----------------------------------*/
 create table long_term_contract
