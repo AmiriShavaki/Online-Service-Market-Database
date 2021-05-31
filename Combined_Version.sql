@@ -169,16 +169,10 @@ create table estimate_price(
 );
 
 insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
-	values (10000, 'Sajj_R', 'MahdiASh', 2291.48);
-
-insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
-	values (10001, 'SMR', 'MHashemi1379', 412.32);
-
-insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
-	values (10002, 'mot1998_1234', 'Mohsen_Hosseini', 123.23);
-
-insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
-	values (10003, 'MeliNo', 'SamanMR', 1243.00);
+	values (10000, 'Sajj_R', 'MahdiASh', 2291.48), (10001, 'SMR', 'MHashemi1379', 412.32),
+	(10002, 'mot1998_1234', 'Mohsen_Hosseini', 123.23), (10003, 'MeliNo', 'SamanMR', 1243.00),
+	(10000, 'Sajj_R', 'Ayandeh_Ziba', 2312.12), (10001, 'SMR', 'Nasiri', 1241.32),
+	(10002, 'mot1998_1234', 'NoandishaneSaee', 120.1), (10003, 'MeliNo', 'RezMosav', 1231.1);
 
 create table finalized_order(
 	client_comment nvarchar(2000),
