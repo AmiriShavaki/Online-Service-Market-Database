@@ -525,13 +525,13 @@ and s_service.s_name=car_service.c_service_name;
 
 /*---------------------------update queries--------------------------------*/
 
-select * from specialist;
+update client set wallet_value = wallet_value + 1000 where wallet_value < 1000;
+select * from client;
+
 delete from specialist where gender = 'female';
 select * from specialist;
 
-select * from company;
 alter table company add website varchar(100);
-select * from company;
 update company set website = 'www.FardasazanAyandehZiba.ir' where username = 'Ayandeh_Ziba';
 select * from company;
 
@@ -563,7 +563,6 @@ set s_name = N'تعمیرات پکیج آب گرم کن'
 where s_name=N'تعمیر  آب گرم کن';*//*how to make it ok????*/
 
 select * from s_service;
-
 
 update device
 set device_name='Lenovo IdeaPad330s'
