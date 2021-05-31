@@ -1,5 +1,4 @@
-﻿
-create table service_provider(
+﻿create table service_provider(
 	username varchar(50) not null,
 	passwrd varchar(50) not null,
 	address_on_social_networks varchar(50),
@@ -168,16 +167,16 @@ create table estimate_price(
 );
 
 insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
-	values ('10000', 'Sajj_R', 'MahdiASh', 2291.48);
+	values (10000, 'Sajj_R', 'MahdiASh', 2291.48);
 
 insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
-	values ('10001', 'SMR', 'MHashemi1379', 412.32);
+	values (10001, 'SMR', 'MHashemi1379', 412.32);
 
 insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
-	values ('10002', 'mot1998_1234', 'Mohsen_Hosseini', 123.23);
+	values (10002, 'mot1998_1234', 'Mohsen_Hosseini', 123.23);
 
 insert into estimate_price (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price)
-	values ('10003', 'MeliNo', 'SamanMR', 1243.00);
+	values (10003, 'MeliNo', 'SamanMR', 1243.00);
 
 create table finalized_order(
 	client_comment nvarchar(2000),
@@ -185,10 +184,22 @@ create table finalized_order(
 	price money not null,
 	initial_order_id int not null,
 	initial_order_estimation_price_request varchar(50) not null,
-	id int identity(10000, 1),
+	id int identity,
 	primary key(initial_order_id, initial_order_estimation_price_request, id),
 	foreign key (initial_order_id, initial_order_estimation_price_request) references initial_order(id, estimation_price_request)
 );
+
+insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
+	values (N'کارشون رو سریع انجام دادن و الان تلویزیونم خیلی خوب شده مثل روز اولش دستشون درد نکنه', 5, 2789.67, 10000, 'Sajj_R');
+
+insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
+	values (N'خیلی دیر اومد آخرش هم پونصد تومن اضافه تر گرفت', 1, 923.12, 10001, 'SMR');
+
+insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
+	values (N'فعلا که ماشینم راه افتاده ولی خیلی بداخلاق بود می‌ترسیدم باهاش حرف بزنم!', 3, 123, 10002, 'mot1998_1234');
+
+insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
+	values (N'خیلی خوبن واقعا دست و پنجه شون درد نکنه باادب و خوش اخلاق و کاربلد', 5, 2134, 10003, 'MeliNo');
 
 create table picks(
 	client varchar(50) not null,
