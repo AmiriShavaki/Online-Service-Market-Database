@@ -284,73 +284,27 @@ create table position
 
 /*long term contracts*/
 insert into long_term_contract(register_time,priod,client,service_provider)
-values ('2008-10-29',12122121,'MeliNo','Mohsen_Hosseini');
-
-insert into long_term_contract(register_time,priod,client,service_provider)
-values ('2009-10-29',12145121,'SMR','MahdiASh');
-
-insert into long_term_contract(register_time,priod,client,service_provider)
-values ('2008-11-29',12567212,'mot1998_1234','SamanMR');
-
-insert into long_term_contract(register_time,priod,client,service_provider)
-values ('2008-10-09',12898121,'Sajj_R','MHashemi1379');
+values ('2008-10-29',12122121,'MeliNo','Mohsen_Hosseini'),
+	('2009-10-29',12145121,'SMR','MahdiASh'),
+	('2008-11-29',12567212,'mot1998_1234','SamanMR'),
+	('2008-10-09',12898121,'Sajj_R','MHashemi1379');
 
 --select * from long_term_contract;
 
-
 /*services*/
 insert into s_service(s_name)
-values (N'تعمیر ماشین ایران خودرو');
-
-insert into s_service(s_name)
-values (N'تعمیر ماشین رنو');
-
-insert into s_service(s_name)
-values (N'تعمیر ماشین پراید');
-
-insert into s_service(s_name)
-values (N'تعمیر ماشین پژو');
-
-insert into s_service(s_name)
-values (N'تعمیر کابینت');
-
-insert into s_service(s_name)
-values (N'تعمیر سینک');
-
-insert into s_service(s_name)
-values (N'تعمیر لوله آشپزخونه');
-
-insert into s_service(s_name)
-values (N'تعمیرات موبایل');
-
-insert into s_service(s_name)
-values (N'تعمیرات کامپیوتر');
-
-insert into s_service(s_name)
-values (N'تعمیرات کنسول بازی');
-
-insert into s_service(s_name)
-values (N'تعمیر تلویزیون');
-
-insert into s_service(s_name)
-values (N'شستن پنجره');
-
-insert into s_service(s_name)
-values (N'تعمیرات لپتاپ');
-
-insert into s_service(s_name)
-values (N'نظافت کف منزل');
-
-insert into s_service(s_name)
-values (N'تعمیر  آب گرم کن');
-
-
+values (N'تعمیر ماشین ایران خودرو'), (N'تعمیر ماشین رنو'), (N'تعمیر ماشین پراید'),
+	(N'تعمیر ماشین پژو'), (N'تعمیر کابینت'), (N'تعمیر سینک'), (N'تعمیر لوله آشپزخونه'),
+	(N'تعمیرات موبایل'), (N'تعمیرات کامپیوتر'), (N'تعمیرات کنسول بازی'), (N'تعمیر تلویزیون'),
+	(N'شستن پنجره'), (N'تعمیرات لپتاپ'), (N'نظافت کف منزل'), (N'تعمیر  آب گرم کن');
 
 /*provides*/
 insert into provides(service_names,service_provider_username)
 values (N'تعمیر ماشین ایران خودرو','Mohsen_Hosseini'), (N'تعمیر تلویزیون ','MahdiASh'),
 	(N'تعمیر  آب گرم کن','SamanMR'), (N'تعمیر کابینت','MHashemi1379'), 
-	(N'تعمیر ماشین رنو','Mohsen_Hosseini');
+	(N'تعمیر ماشین رنو','Mohsen_Hosseini'), (N'تعمیر ماشین رنو','NoandishaneSaee'),
+	(N'تعمیر ماشین ایران خودرو','NoandishaneSaee'), (N'تعمیر تلویزیون ','Ayandeh_Ziba'),
+	(N'تعمیر کابینت','Nasiri'), (N'تعمیر کابینت','RezMosav');
 
 --select * from provides;
 
@@ -370,78 +324,35 @@ values (N'تندر',N'تعمیر ماشین ایران خودرو'), (N'سمند
 --select * from vehicle;
 /*non_electric_kitchen_service*/
 insert into non_electric_kitchen_service(k_service_name)
-values(N'تعمیر کابینت');
-
-insert into non_electric_kitchen_service(k_service_name)
-values(N'تعمیر سینک');
-
-insert into non_electric_kitchen_service(k_service_name)
-values(N'تعمیر لوله آشپزخونه');
-
+values(N'تعمیر کابینت'), (N'تعمیر سینک'), (N'تعمیر لوله آشپزخونه');
 
 --select * from non_electric_kitchen_service;
 
 insert into home_appliances(appliances_name,non_electric_kitchen_service)
-values(N'کابینت',N'تعمیر کابینت');
-
-insert into home_appliances(appliances_name,non_electric_kitchen_service)
-values(N'سینک ظرف شویی',N'تعمیر سینک');
-
-insert into home_appliances(appliances_name,non_electric_kitchen_service)
-values(N'لوله های آب در آشپزخونه',N'تعمیر لوله آشپزخونه');
+values(N'کابینت',N'تعمیر کابینت'), (N'سینک ظرف شویی',N'تعمیر سینک'),
+	(N'لوله های آب در آشپزخونه',N'تعمیر لوله آشپزخونه');
 
 --select * from home_appliances;
 
 insert into electric_service(e_service_name)
-values(N'تعمیرات موبایل');
-
-insert into electric_service(e_service_name)
-values(N'تعمیرات کامپیوتر');
-
-insert into electric_service(e_service_name)
-values(N'تعمیرات لپتاپ');
-
-insert into electric_service(e_service_name)
-values(N'تعمیرات کنسول بازی');
-
-insert into electric_service(e_service_name)
-values(N'تعمیر تلویزیون ');
+values(N'تعمیرات موبایل'), (N'تعمیرات کامپیوتر'), (N'تعمیرات لپتاپ'), (N'تعمیرات کنسول بازی'),
+	(N'تعمیر تلویزیون ');
 
 --select * from electric_service;
 
 insert into device(device_name,electric_service)
-values(N'S10',N'تعمیرات موبایل');
-
-insert into device(device_name,electric_service)
-values(N'S9',N'تعمیرات موبایل');
-
-insert into device(device_name,electric_service)
-values(N'S8',N'تعمیرات موبایل');
-
-insert into device(device_name,electric_service)
-values(N'ps4',N'تعمیرات کنسول بازی');
-
-insert into device(device_name,electric_service)
-values(N'LG7s',N'تعمیر تلویزیون ');
-
-insert into device(device_name,electric_service)
-values(N'ideapad 330s',N'تعمیرات لپتاپ');
+values(N'S10',N'تعمیرات موبایل'), (N'S9',N'تعمیرات موبایل'), (N'S8',N'تعمیرات موبایل'),
+	(N'ps4',N'تعمیرات کنسول بازی'), (N'LG7s',N'تعمیر تلویزیون '), (N'ideapad 330s',N'تعمیرات لپتاپ');
 
 --select * from device;
 
 insert into cleaning_service(clean_service_name,approximate_area_value)
-values(N'شستن پنجره',N'ده تا دو در دو')
-
-insert into cleaning_service(clean_service_name,approximate_area_value)
-values(N'نظافت کف منزل',N'60m^2');
+values(N'شستن پنجره',N'ده تا دو در دو'), (N'نظافت کف منزل',N'60m^2');
 
 --select * from cleaning_service;
 
 insert into position(position_name,cleaning_service)
-values(N'پنجره های اتاق خواب پذیرایی آشپزخونه',N'شستن پنجره');
-
-insert into position(position_name,cleaning_service)
-values(N'کف منزل',N'نظافت کف منزل');
+values(N'پنجره های اتاق خواب پذیرایی آشپزخونه',N'شستن پنجره'), (N'کف منزل',N'نظافت کف منزل');
 
 --select * from position;
 
