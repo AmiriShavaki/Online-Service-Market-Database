@@ -129,7 +129,8 @@ insert into initial_order (description_of_requested_work, estimation_price_reque
 	values (N'لامپ تلویزیون شکسته و فقط نصفش روشن میشه بقیه ی صفحه کاملا تاریک و خاموشه، تلویزیون ۴۰ اینچ ال جی', 'Sajj_R'),
 	(N'در کابینت خراب شده و لقی داره وقتی بازش می کنیم خیلی به سمت پایین کج می مونه', 'SMR'),
 	(N'ماشینم استارت نمی خوره، بنزین داره و تسمه اش هم تازه عوض کردم نمی دونم چش شده', 'mot1998_1234'),
-	(N'لوله ی آبگرمکن ترکیده و خیلی چکه می کنه حسابی آشپزخونه رو بو انداخته', 'MeliNo');
+	(N'لوله ی آبگرمکن ترکیده و خیلی چکه می کنه حسابی آشپزخونه رو بو انداخته', 'MeliNo'),
+	(N'روغن موتور ماشینم حسابی سیاه شده، لنت‌هاش هم فک کنم تموم شده باید عوض شه مدل ماشینم رنو مگانه', 'MeliNo');
 
 create table estimate_price(
 	initial_order_id int not null,
@@ -145,7 +146,8 @@ insert into estimate_price (initial_order_id, initial_order_estimation_price_req
 	values (10000, 'Sajj_R', 'MahdiASh', 2291.48), (10001, 'SMR', 'MHashemi1379', 412.32),
 	(10002, 'mot1998_1234', 'Mohsen_Hosseini', 123.23), (10003, 'MeliNo', 'SamanMR', 1243.00),
 	(10000, 'Sajj_R', 'Ayandeh_Ziba', 2312.12), (10001, 'SMR', 'Nasiri', 1241.32),
-	(10002, 'mot1998_1234', 'NoandishaneSaee', 120.1), (10003, 'MeliNo', 'RezMosav', 1231.1);
+	(10002, 'mot1998_1234', 'NoandishaneSaee', 120.1), (10003, 'MeliNo', 'RezMosav', 1231.1),
+	(10004, 'MeliNo', 'Mohsen_Hosseini', 134), (10004, 'MeliNo', 'NoandishaneSaee', 3465);
 
 create table finalized_order(
 	client_comment nvarchar(2000),
@@ -163,7 +165,8 @@ insert into finalized_order (client_comment, rating, price, initial_order_id, in
 	values (N'کارشون رو سریع انجام دادن و الان تلویزیونم خیلی خوب شده مثل روز اولش دستشون درد نکنه', 5, 2789.67, 10000, 'Sajj_R'),
 	(N'خیلی دیر اومد آخرش هم پونصد تومن اضافه تر گرفت', 1, 923.12, 10001, 'SMR'),
 	(N'فعلا که ماشینم راه افتاده ولی خیلی بداخلاق بود می‌ترسیدم باهاش حرف بزنم!', 3, 123, 10002, 'mot1998_1234'),
-	(N'خیلی خوبن واقعا دست و پنجه شون درد نکنه باادب و خوش اخلاق و کاربلد', 5, 2134, 10003, 'MeliNo');
+	(N'خیلی خوبن واقعا دست و پنجه شون درد نکنه باادب و خوش اخلاق و کاربلد', 5, 2134, 10003, 'MeliNo'),
+	(N'بد نبود اومد کارش رو انجام داد بی سر و صدا رفت انعام هم نخواست', 3, 124, 10004, 'MeliNo');
 
 /*insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
 	values(N'خیلی خیلی عالی', 100, 2000, 10003, 'MeliNo'); check constraint*/
@@ -181,7 +184,8 @@ create table picks(
 
 insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
 	values ('MeliNo', 10003, 'MeliNo', 'SamanMR'), ('SMR', 10001, 'SMR', 'MHashemi1379'),
-	('mot1998_1234', 10002, 'mot1998_1234', 'Mohsen_Hosseini'), ('Sajj_R', 10000, 'Sajj_R', 'MahdiASh');
+	('mot1998_1234', 10002, 'mot1998_1234', 'Mohsen_Hosseini'), ('Sajj_R', 10000, 'Sajj_R', 'MahdiASh'),
+	('MeliNo', 10004, 'MeliNo', 'Mohsen_Hosseini');
 
 /*part_2*//*--------------------------------create table-----------------------------------*/
 create table long_term_contract
@@ -225,8 +229,8 @@ create table car_service
 
 create table vehicle
 (
-	vehicle_name nvarchar(100) not null unique,
-	car_service nvarchar(100) not null unique,
+	vehicle_name nvarchar(100) not null,
+	car_service nvarchar(100) not null,
 	primary key(vehicle_name,car_service),
 	foreign key(car_service) references car_service(c_service_name)
 );
@@ -253,8 +257,7 @@ create table electric_service
 	foreign key(e_service_name) references s_service(s_name)
 );
 
-create table device
-(
+create table device(
 	device_name nvarchar(100) not null unique,
 	electric_service nvarchar(100) not null,
 	primary key(electric_service,device_name),
@@ -345,52 +348,24 @@ values (N'تعمیر  آب گرم کن');
 
 /*provides*/
 insert into provides(service_names,service_provider_username)
-values (N'تعمیر ماشین ایران خودرو','Mohsen_Hosseini');
-
-insert into provides(service_names,service_provider_username)
-values (N'تعمیر تلویزیون ','MahdiASh');
-
-insert into provides(service_names,service_provider_username)
-values (N'تعمیر  آب گرم کن','SamanMR');
-
-insert into provides(service_names,service_provider_username)
-values (N'تعمیر کابینت','MHashemi1379');
-
-insert into provides(service_names,service_provider_username)
-values (N'تعمیر ماشین رنو','Mohsen_Hosseini');
-
+values (N'تعمیر ماشین ایران خودرو','Mohsen_Hosseini'), (N'تعمیر تلویزیون ','MahdiASh'),
+	(N'تعمیر  آب گرم کن','SamanMR'), (N'تعمیر کابینت','MHashemi1379'), 
+	(N'تعمیر ماشین رنو','Mohsen_Hosseini');
 
 --select * from provides;
 
-
-
 /*car_service*/
 insert into car_service(c_service_name)
-values (N'تعمیر ماشین ایران خودرو');
-
-insert into car_service(c_service_name)
-values (N'تعمیر ماشین رنو');
-
-insert into car_service(c_service_name)
-values (N'تعمیر ماشین پراید');
-
-insert into car_service(c_service_name)
-values (N'تعمیر ماشین پژو');
-
+values (N'تعمیر ماشین ایران خودرو'), (N'تعمیر ماشین رنو'), (N'تعمیر ماشین پراید'), (N'تعمیر ماشین پژو');
 
 --select * from car_service;
 /*vehicle*/
 insert into vehicle(vehicle_name,car_service)
-values (N'تندر',N'تعمیر ماشین ایران خودرو');
-
-insert into vehicle(vehicle_name,car_service)
-values (N'مگان',N'تعمیر ماشین رنو');
-
-insert into vehicle(vehicle_name,car_service)
-values (N'تیبا',N'تعمیر ماشین پراید');
-
-insert into vehicle(vehicle_name,car_service)
-values (N'206',N'تعمیر ماشین پژو');
+values (N'تندر',N'تعمیر ماشین ایران خودرو'), (N'سمند',N'تعمیر ماشین ایران خودرو'),
+	(N'مگان',N'تعمیر ماشین رنو'), (N'تیبا',N'تعمیر ماشین پراید'), (N'206',N'تعمیر ماشین پژو'),
+	(N'2008',N'تعمیر ماشین پژو'), (N'پرایدوانت',N'تعمیر ماشین پراید'),
+	(N'فلوئنس',N'تعمیر ماشین رنو'), (N'دنا',N'تعمیر ماشین ایران خودرو'),
+	(N'پراید141',N'تعمیر ماشین پراید'), (N'405',N'تعمیر ماشین پژو');
 
 --select * from vehicle;
 /*non_electric_kitchen_service*/
@@ -479,7 +454,6 @@ from long_term_contract;
 select service_names,service_provider_username
 from provides;
 
-
 select service_names,service_provider_username,phone_number
 from provides,service_provider
 where service_provider_username=service_provider.username;
@@ -511,6 +485,7 @@ select position_name
 from position,cleaning_service
 where cleaning_service.clean_service_name=position.cleaning_service;
 /*---------------------------complicated select queries-----------------------------------------------*/
+
 select * from service_provider inner join provides on service_provider.username=provides.service_provider_username;
 
 select * from car_service inner join vehicle on car_service.c_service_name=vehicle.car_service;
