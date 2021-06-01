@@ -112,10 +112,8 @@ insert into client (first_name, last_name, wallet_value, username, passwrd)
 	values ('Seyed Mahdi', 'Razavi', 3124.123, 'SMR', 'AlAla1234');
 
 insert into client (last_name, phone_number, wallet_value, username, passwrd)
-	values ('Motevaseli', '+989123123456', 234.23, 'mot1998_1234', 'AStrongPassword');
-
-insert into client (last_name, phone_number, wallet_value, username, passwrd)
-	values ('Ramezani', '+9891249772309', 0, 'Sajj_R', 'Pass1234');
+	values ('Motevaseli', '+989123123456', 234.23, 'mot1998_1234', 'AStrongPassword'),
+		('Ramezani', '+9891249772309', 0, 'Sajj_R', 'Pass1234');
 
 create table initial_order(
 	description_of_requested_work nvarchar(2000) not null,
@@ -130,7 +128,10 @@ insert into initial_order (description_of_requested_work, estimation_price_reque
 	(N'در کابینت خراب شده و لقی داره وقتی بازش می کنیم خیلی به سمت پایین کج می مونه', 'SMR'),
 	(N'ماشینم استارت نمی خوره، بنزین داره و تسمه اش هم تازه عوض کردم نمی دونم چش شده', 'mot1998_1234'),
 	(N'لوله ی آبگرمکن ترکیده و خیلی چکه می کنه حسابی آشپزخونه رو بو انداخته', 'MeliNo'),
-	(N'روغن موتور ماشینم حسابی سیاه شده، لنت‌هاش هم فک کنم تموم شده باید عوض شه مدل ماشینم رنو مگانه', 'MeliNo');
+	(N'روغن موتور ماشینم حسابی سیاه شده، لنت‌هاش هم فک کنم تموم شده باید عوض شه مدل ماشینم رنو مگانه', 'MeliNo'),
+	(N'دیشب فوتبال بود اعصابم خورد شد زدم تلویزیونو شیکستم، وسطش سوراخ شده ولی بقیه اش سالمه!', 'mot1998_1234'),
+	(N'آبگرمکن روشن نمیشه درجه‌ ی آب اش روی ۱ گیر کرده بالاتر نمیره نمی دونیم چیکار کنیم', 'SMR'),
+	(N'چند سال ایران نبودم کابینت ها رو موریانه خورده از تو پوک شده اصن یه سرویس کامل نیاز داره...', 'Sajj_R');
 
 create table estimate_price(
 	initial_order_id int not null,
@@ -147,7 +148,9 @@ insert into estimate_price (initial_order_id, initial_order_estimation_price_req
 	(10002, 'mot1998_1234', 'Mohsen_Hosseini', 123.23), (10003, 'MeliNo', 'SamanMR', 1243.00),
 	(10000, 'Sajj_R', 'Ayandeh_Ziba', 2312.12), (10001, 'SMR', 'Nasiri', 1241.32),
 	(10002, 'mot1998_1234', 'NoandishaneSaee', 120.1), (10003, 'MeliNo', 'RezMosav', 1231.1),
-	(10004, 'MeliNo', 'Mohsen_Hosseini', 134), (10004, 'MeliNo', 'NoandishaneSaee', 3465);
+	(10004, 'MeliNo', 'Mohsen_Hosseini', 134), (10004, 'MeliNo', 'NoandishaneSaee', 3465),
+	(10005, 'mot1998_1234', 'MahdiASh', 9354), (10005, 'mot1998_1234', 'Ayandeh_Ziba', 623),
+	(10006, 'SMR', 'SamanMR', 861), (10007, 'Sajj_R', 'MHashemi1379', 981);
 
 create table finalized_order(
 	client_comment nvarchar(2000),
@@ -166,7 +169,10 @@ insert into finalized_order (client_comment, rating, price, initial_order_id, in
 	(N'خیلی دیر اومد آخرش هم پونصد تومن اضافه تر گرفت', 1, 923.12, 10001, 'SMR'),
 	(N'فعلا که ماشینم راه افتاده ولی خیلی بداخلاق بود می‌ترسیدم باهاش حرف بزنم!', 3, 123, 10002, 'mot1998_1234'),
 	(N'خیلی خوبن واقعا دست و پنجه شون درد نکنه باادب و خوش اخلاق و کاربلد', 5, 2134, 10003, 'MeliNo'),
-	(N'بد نبود اومد کارش رو انجام داد بی سر و صدا رفت انعام هم نخواست', 3, 124, 10004, 'MeliNo');
+	(N'بد نبود اومد کارش رو انجام داد بی سر و صدا رفت انعام هم نخواست', 3, 124, 10004, 'MeliNo'),
+	(N'راضی بودم فقط ای کاش ماسک می‌زد موقع کارش', 4, 124, 10005, 'mot1998_1234'),
+	(N'وقتی رفت خونمون رو بوی سیگار برداشته بود هر چی هم بهش تذکر می‌دادیم که سیگار نکش اصن انگار نه انگار', 2, 345, 10006, 'SMR'),
+	(N'پول کم گرفت خدا خیرش بده', 5, 165, 10007, 'Sajj_R');
 
 /*insert into finalized_order (client_comment, rating, price, initial_order_id, initial_order_estimation_price_request)
 	values(N'خیلی خیلی عالی', 100, 2000, 10003, 'MeliNo'); check constraint*/
@@ -185,7 +191,8 @@ create table picks(
 insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
 	values ('MeliNo', 10003, 'MeliNo', 'SamanMR'), ('SMR', 10001, 'SMR', 'MHashemi1379'),
 	('mot1998_1234', 10002, 'mot1998_1234', 'Mohsen_Hosseini'), ('Sajj_R', 10000, 'Sajj_R', 'MahdiASh'),
-	('MeliNo', 10004, 'MeliNo', 'Mohsen_Hosseini');
+	('MeliNo', 10004, 'MeliNo', 'Mohsen_Hosseini'), ('mot1998_1234', 10005, 'mot1998_1234', 'MahdiASh'),
+	('SMR', 10006, 'SMR', 'SamanMR'), ('Sajj_R', 10007, 'Sajj_R', 'MHashemi1379');
 
 /*part_2*//*--------------------------------create table-----------------------------------*/
 create table long_term_contract
