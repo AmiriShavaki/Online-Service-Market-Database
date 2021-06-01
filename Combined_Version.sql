@@ -225,8 +225,6 @@ create table provides
 	foreign key(service_provider_username) references service_provider(username)/*used another table from another part------high possibility of error*/
 );
 
-
-
 create table car_service
 (
 	c_service_name nvarchar(100) not null unique,
@@ -403,6 +401,28 @@ select position_name
 from position,cleaning_service
 where cleaning_service.clean_service_name=position.cleaning_service;
 /*---------------------------complicated select queries-----------------------------------------------*/
+
+select picks.initial_order_id, client, e1.estimated_price as expensive_picked_price, e2.estimated_price as lowest_proposed_price
+from picks, estimate_price as e1, estimate_price as e2
+where picks.service_provider = e1.service_provider and picks.initial_order_id = e1.initial_order_id and
+	picks.initial_order_id = e2.initial_order_id and e1.estimated_price > e2.estimated_price;
+
+select service_provider, count(service_provider) as Number_of_completed_services
+from (finalized_order inner join initial_order on initial_order.id = initial_order_id) 
+	inner join picks on initial_order.id = picks.initial_order_id
+group by service_provider;
+
+select p.service_provider, avg(price) as Average_Price
+from ((finalized_order inner join initial_order on initial_order.id = initial_order_id) 
+	inner join picks p on initial_order.id = p.initial_order_id) 
+	inner join estimate_price e on p.initial_order_id = e.initial_order_id and p.service_provider = e.service_provider
+group by p.service_provider;
+
+select p.service_provider, avg(cast(rating as float)) as Average_Rating
+from ((finalized_order inner join initial_order on initial_order.id = initial_order_id) 
+	inner join picks p on initial_order.id = p.initial_order_id) 
+	inner join estimate_price e on p.initial_order_id = e.initial_order_id and p.service_provider = e.service_provider
+group by p.service_provider;
 
 select * from service_provider inner join provides on service_provider.username=provides.service_provider_username;
 
