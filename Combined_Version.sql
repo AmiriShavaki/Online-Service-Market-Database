@@ -685,6 +685,23 @@ order by max_rating_achieved desc;
 
 drop function most_satisifing_service_provider;
 
+go
+create function show_all_of_clients(@serviceProviderUserName varchar(50)) returns table as
+return (
+select distinct picks.initial_order_estimation_price_request as client_username
+from picks
+where picks.service_provider = @serviceProviderUserName
+);
+go
+
+-- for example
+select * from show_all_of_clients('SamanMR'); 
+select * from show_all_of_clients('MahdiASh');
+select * from show_all_of_clients('MHashemi1379');
+select * from show_all_of_clients('Mohsen_Hosseini');
+
+drop function show_all_of_clients;
+
 /*------------------------drop table--------------------------- */
 
 
