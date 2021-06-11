@@ -659,6 +659,32 @@ drop view client_past_orders_insight;
 
 /*------------------------Functions--------------------------- */
 
+go
+create function most_satisifing_service_provider(@clientUserName varchar(50)) returns table as
+return (
+select p.service_provider, max(rating) as max_rating_achieved
+from
+(((finalized_order inner join initial_order on initial_order.id = initial_order_id) 
+	inner join picks p on initial_order.id = p.initial_order_id) 
+	inner join estimate_price e on p.initial_order_id = e.initial_order_id and 
+	p.service_provider = e.service_provider)
+where p.client = @clientUserName
+group by p.service_provider
+);
+go
+
+-- for example
+select top 1 * from most_satisifing_service_provider('mot1998_1234') 
+order by max_rating_achieved desc;
+select top 1 * from most_satisifing_service_provider('SMR') 
+order by max_rating_achieved desc;
+select top 1 * from most_satisifing_service_provider('Sajj_R') 
+order by max_rating_achieved desc;
+select top 1 * from most_satisifing_service_provider('MeliNo') 
+order by max_rating_achieved desc;
+
+drop function most_satisifing_service_provider;
+
 /*------------------------drop table--------------------------- */
 
 
