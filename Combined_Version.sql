@@ -1,4 +1,4 @@
-﻿create table service_provider(
+﻿/*create table service_provider(
 	username varchar(50) not null,
 	passwrd varchar(50) not null,
 	address_on_social_networks varchar(50),
@@ -7,38 +7,83 @@
 	start_year date,
 	location_range_of_service nvarchar(100),
 	primary key (username)
+);*/
+
+create table sp1(
+	username varchar(50) not null,
+	passwrd varchar(50) not null,
+	start_year date,
+	location_range_of_service nvarchar(100),
+	primary key (username)
 );
 
-insert into service_provider (username, passwrd, address_on_social_networks, phone_number, licence_number, start_year, 
-								location_range_of_service)
-		values  ('Mohsen_Hosseini', 'pAssword4', 'MohHoss', '09141468677', '723986459', '2015-12-17', 'Pasdaran, Azadi, Navvab'),
-			('RezMosav', 'IndComp', 'R_Mos', '09234123451', '23451927', '2019-2-1', 'Shemiran, Shoush, Molavi, Narmak, Vanak'),
-			('Nasiri', 'NotFound1234', 'Nasir1234', '09123452356', '23534612', '2018-3-12', 'Meydon Hor, Roudaki, Mosalla');
-			
-insert into service_provider (username, passwrd, address_on_social_networks, phone_number, location_range_of_service)
-		values  ('MahdiASh', '12344321', 'MA1379', '09222702476', 'Jamalzadeh, Shahr e Rey, Tajrish, Azadegan, Mehrabad');
+create table sp2(
+	username varchar(50) not null,
+	address_on_social_networks varchar(50),
+	primary key (username),
+	foreign key (username) references sp1(username)
+);
 
-insert into service_provider (username, passwrd, phone_number, location_range_of_service)
-		values  ('SamanMR', '87654321', '09105983290', 'Lalehzar, Naziabad, Yaftabad, Meydan Resalat, Piroozi');
+create table sp3(
+	username varchar(50) not null,
+	phone_number varchar(15),
+	primary key (username),
+	foreign key (username) references sp1(username)
+);
 
-insert into service_provider (username, passwrd, licence_number, start_year)
-		values  ('MHashemi1379', '13792000', '3452134', '2013-5-4');
+create table sp4(
+	username varchar(50) not null,
+	licence_number varchar(15),
+	primary key (username),
+	foreign key (username) references sp1(username)
+);
 
-insert into service_provider (username, passwrd, address_on_social_networks, phone_number)
-		values ('Ayandeh_Ziba', 'DontHackMePls', 'AyandeRoshanAstDDD', '02144124124')
+insert into sp1(username, passwrd, start_year, location_range_of_service)
+	values ('Mohsen_Hosseini', 'pAssword4', '2015-12-17', 'Pasdaran, Azadi, Navvab'),
+		('RezMosav', 'IndComp', '2019-2-1', 'Shemiran, Shoush, Molavi, Narmak, Vanak'),
+		('Nasiri', 'NotFound1234', '2018-3-12', 'Meydon Hor, Roudaki, Mosalla')
 
-insert into service_provider (username, passwrd, phone_number, location_range_of_service)
-		values ('PorkaranePortalash', '12345678', '0212323233', 'Pasdaran, Monirye, Tajrish, Darvazeh ghaar')
+insert into sp1(username, passwrd, location_range_of_service)
+	values ('MahdiASh', '12344321', 'Jamalzadeh, Shahr e Rey, Tajrish, Azadegan, Mehrabad'),
+	('SamanMR', '87654321', 'Lalehzar, Naziabad, Yaftabad, Meydan Resalat, Piroozi'),
+	('PorkaranePortalash', '12345678', 'Pasdaran, Monirye, Tajrish, Darvazeh ghaar');
 
-insert into service_provider (username, passwrd, phone_number)
-		values ('NoandishaneSaee', '14253462', '+989123123132');
+insert into sp1(username, passwrd, start_year)
+	values ('MHashemi1379', '13792000', '2013-5-4');
+
+insert into sp1(username, passwrd)
+	values ('Ayandeh_Ziba', 'DontHackMePls'),
+		('NoandishaneSaee', '14253462');
+
+insert into sp2(username, address_on_social_networks)
+	values ('Mohsen_Hosseini', 'MohHoss'),
+		('RezMosav', 'R_Mos'),
+		('Nasiri', 'Nasir1234'),
+		('MahdiASh', 'MA1379'),
+		('Ayandeh_Ziba','AyandeRoshanAstDDD')
+
+insert into sp3(username, phone_number)
+	values ('Mohsen_Hosseini', '09141468677'),
+		('RezMosav', '09234123451'),
+		('Nasiri', '09123452356'),
+		('MahdiASh', '09222702476'),
+		('SamanMR', '09105983290'),
+		('Ayandeh_Ziba','02144124124'),
+		('PorkaranePortalash', '0212323233'),
+		('NoandishaneSaee', '+989123123132');
+
+insert into sp4(username, licence_number)
+	values ('Mohsen_Hosseini', '723986459'),
+		('RezMosav', '23451927'),
+		('Nasiri', '23534612'),
+		('MHashemi1379', '3452134')
 
 create table gallery(
 	photo_url varchar(300) not null,
 	photo_id int identity(10000, 1),
 	username varchar(50) not null,
 	primary key (photo_id, username),
-	foreign key (username) references service_provider(username)
+	foreign key (username) references sp1(username)
 );
 
 insert into gallery (photo_url, username)
@@ -55,7 +100,7 @@ create table specialist(
 	degree_of_education varchar(100),
 	username varchar(50) not null,
 	primary key (username),
-	foreign key (username) references service_provider(username)
+	foreign key (username) references sp1(username)
 );
 
 insert into specialist (first_name, last_name, gender, age, degree_of_education, username)
@@ -75,7 +120,7 @@ create table company(
 	/*website varchar(100) this att will be added to company table once we use an alter command later*/
 	username varchar(50) not null,
 	primary key (username),
-	foreign key (username) references service_provider(username)
+	foreign key (username) references sp1(username)
 );
 
 insert into company (username)
@@ -95,7 +140,7 @@ insert into company_manager (first_name, last_name, company_username)
 insert into company_manager (last_name, company_username)
 	values ('Shoeibi', 'NoandishaneSaee');
 
-create table client(
+/*create table client(
 	first_name nvarchar(100),
 	last_name nvarchar(100) not null,
 	phone_number varchar(15),
@@ -103,24 +148,45 @@ create table client(
 	username varchar(50) not null,
 	passwrd varchar(50) not null,
 	primary key(username)
+);*/
+
+create table cl1(
+	first_name nvarchar(100),
+	last_name nvarchar(100) not null,
+	wallet_value money not null,
+	username varchar(50) not null,
+	passwrd varchar(50) not null,
+	primary key(username)
 );
 
-insert into client (first_name, last_name, phone_number, wallet_value, username, passwrd)
-	values ('Melika', 'Nobakhtian', '+989131231231', 100.2, 'MeliNo', 'perspolis');
+create table cl2(
+	phone_number varchar(15),
+	username varchar(50),
+	primary key(username),
+	foreign key (username) references cl1(username)
+);
 
-insert into client (first_name, last_name, wallet_value, username, passwrd)
+insert into cl1 (first_name, last_name, wallet_value, username, passwrd)
+	values ('Melika', 'Nobakhtian', 100.2, 'MeliNo', 'perspolis');
+
+insert into cl1 (first_name, last_name, wallet_value, username, passwrd)
 	values ('Seyed Mahdi', 'Razavi', 3124.123, 'SMR', 'AlAla1234');
 
-insert into client (last_name, phone_number, wallet_value, username, passwrd)
-	values ('Motevaseli', '+989123123456', 234.23, 'mot1998_1234', 'AStrongPassword'),
-		('Ramezani', '+9891249772309', 0, 'Sajj_R', 'Pass1234');
+insert into cl1 (last_name, wallet_value, username, passwrd)
+	values ('Motevaseli', 234.23, 'mot1998_1234', 'AStrongPassword'),
+		('Ramezani', 0, 'Sajj_R', 'Pass1234');
+
+insert into cl2 (username, phone_number)
+	values ('mot1998_1234', '+989123123456'),
+		('Sajj_R', '+9891249772309'),
+		('MeliNo', '+989131231231');
 
 create table initial_order(
 	description_of_requested_work nvarchar(2000) not null,
 	estimation_price_request varchar(50) not null,
 	id int identity(10000, 1) not null,
 	primary key (id, estimation_price_request),
-	foreign key (estimation_price_request) references client(username)
+	foreign key (estimation_price_request) references cl1(username)
 );
 
 insert into initial_order (description_of_requested_work, estimation_price_request)
@@ -139,7 +205,7 @@ create table estimate_price(
 	service_provider varchar(50) not null,
 	estimated_price money not null,
 	primary key (initial_order_id, initial_order_estimation_price_request, service_provider),
-	foreign key (service_provider) references service_provider(username),
+	foreign key (service_provider) references sp1(username),
 	foreign key (initial_order_id, initial_order_estimation_price_request) references initial_order(id, estimation_price_request)
 );
 
@@ -183,9 +249,9 @@ create table picks(
 	initial_order_estimation_price_request varchar(50) not null,
 	service_provider varchar(50) not null,
 	primary key(client, initial_order_id, initial_order_estimation_price_request, service_provider),
-	foreign key (client) references client(username),
+	foreign key (client) references cl1(username),
 	foreign key (initial_order_id, initial_order_estimation_price_request) references initial_order(id, estimation_price_request),
-	foreign key (service_provider) references service_provider(username)
+	foreign key (service_provider) references sp1(username)
 );
 
 insert into picks (client, initial_order_id, initial_order_estimation_price_request, service_provider)
@@ -203,8 +269,8 @@ create table long_term_contract
 	client        varchar(50) not null,
 	service_provider varchar(50) not null,
 	primary key (contract_id),
-	foreign key(client) references client(username),/*used another table from another part------high possibility of error*/
-	foreign key(service_provider) references service_provider(username), /*used another table from another part------high possibility of error*/
+	foreign key(client) references cl1(username),/*used another table from another part------high possibility of error*/
+	foreign key(service_provider) references sp1(username), /*used another table from another part------high possibility of error*/
 	check (priod > 10000)
 );
 
@@ -222,7 +288,7 @@ create table provides
 	service_names nvarchar(100) not null,/*service_name is a reserved word.*/
 	service_provider_username varchar(50) not null,
 	foreign key (service_names) references s_service(s_name),/*service and name is reserved by sql*//*used another table from another part------high possibility of error*/
-	foreign key(service_provider_username) references service_provider(username)/*used another table from another part------high possibility of error*/
+	foreign key(service_provider_username) references sp1(username)/*used another table from another part------high possibility of error*/
 );
 
 create table car_service
@@ -371,8 +437,8 @@ select service_names,service_provider_username
 from provides;
 
 select service_names,service_provider_username,phone_number
-from provides,service_provider
-where service_provider_username=service_provider.username;
+from provides, sp1, sp3
+where service_provider_username=sp1.username and sp3.username = sp1.username;
 
 select * from s_service;
 
@@ -424,7 +490,7 @@ from ((finalized_order inner join initial_order on initial_order.id = initial_or
 	inner join estimate_price e on p.initial_order_id = e.initial_order_id and p.service_provider = e.service_provider
 group by p.service_provider;
 
-select * from service_provider inner join provides on service_provider.username=provides.service_provider_username;
+select * from sp1 inner join provides on sp1.username=provides.service_provider_username;
 
 select * from car_service inner join vehicle on car_service.c_service_name=vehicle.car_service;
 
@@ -436,18 +502,18 @@ select * from electric_service inner join device on device.electric_service=elec
 
 select * from cleaning_service inner join position on cleaning_service.clean_service_name=position.cleaning_service;
 
-select * from client
-where wallet_value>(select avg(wallet_value) from client);
+select * from cl1
+where wallet_value>(select avg(wallet_value) from cl1);
 
-select * from service_provider ,provides,car_service,s_service
-where service_provider.username=provides.service_provider_username
+select * from sp1 ,provides,car_service,s_service
+where sp1.username=provides.service_provider_username
 and provides.service_names=s_service.s_name
 and s_service.s_name=car_service.c_service_name;
 
 /*---------------------------update queries--------------------------------*/
 
-update client set wallet_value = wallet_value + 1000 where wallet_value < 1000;
-select * from client;
+update cl1 set wallet_value = wallet_value + 1000 where wallet_value < 1000;
+select * from cl1;
 
 delete from specialist where gender = 'female';
 select * from specialist;
@@ -535,7 +601,10 @@ select * from s_service;
 delete from device where device_name='PlayStation5';
 select * from device;
 /*----------------------final simplq queries------------------------*/
-select * from service_provider;
+select * from sp1;
+select * from sp2;
+select * from sp3;
+select * from sp4;
 select * from gallery; 
 select * from specialist;
 select * from company;
@@ -543,7 +612,8 @@ select * from company_manager;
 select * from finalized_order;
 select * from initial_order;
 select * from estimate_price;
-select * from client;
+select * from cl1;
+select * from cl2;
 select * from picks;
 select * from long_term_contract;
 select * from provides;
@@ -565,12 +635,16 @@ drop table picks;
 drop table estimate_price;
 drop table finalized_order;
 drop table initial_order;
-drop table client;
+drop table cl2;
+drop table cl1;
 drop table gallery;
 drop table specialist;
 drop table company_manager;
 drop table company;
-drop table service_provider;
+drop table sp4;
+drop table sp3;
+drop table sp2;
+drop table sp1;
 drop table vehicle;
 drop table car_service;
 drop table home_appliances;
