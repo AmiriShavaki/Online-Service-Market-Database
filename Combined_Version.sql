@@ -632,18 +632,30 @@ go
 create view service_provider_profiles(username, address_on_social_networks, license_number, avg_rating,
 										avg_price, number_of_completed_services) as
 select p.service_provider, sp2.address_on_social_networks, sp4.licence_number,
-	avg(cast(rating as float)) as Average_Rating, avg(price) as Average_Price, 
-	count(p.service_provider) as Number_of_completed_services
+	avg(cast(rating as float)), avg(price), count(p.service_provider)
 from ((((finalized_order inner join initial_order on initial_order.id = initial_order_id) 
 	inner join picks p on initial_order.id = p.initial_order_id) 
 	inner join estimate_price e on p.initial_order_id = e.initial_order_id and p.service_provider = e.service_provider)
 	left join sp2 on sp2.username = p.service_provider) left join sp4 on sp4.username = p.service_provider
-group by p.service_provider, sp2.address_on_social_networks, sp4.licence_number;
+group by p.service_provider, sp2.address_on_social_networks, sp4.licence_number
 go
 
-select * from service_provider_profiles;
+select * from service_provider_profiles order by avg_rating desc, avg_price;
 
 drop view service_provider_profiles;
+
+go
+create view client_past_orders_insight(username, first_name, last_name, avg_given_rating, total_spent_price, 
+										number_of_completed_requested_services) as
+select c.username, c.first_name, c.last_name, avg(cast(rating as float)), sum(price), count(f.id)
+from ((finalized_order f inner join initial_order on initial_order.id = initial_order_id) 
+	inner join cl1 c on initial_order.estimation_price_request = c.username)
+group by c.username, c.first_name, c.last_name
+go 
+
+select * from client_past_orders_insight order by total_spent_price desc;
+
+drop view client_past_orders_insight;
 
 /*------------------------Functions--------------------------- */
 
