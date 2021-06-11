@@ -138,7 +138,7 @@ create table estimate_price(
 	initial_order_estimation_price_request varchar(50) not null,
 	service_provider varchar(50) not null,
 	estimated_price money not null,
-	primary key (initial_order_id, initial_order_estimation_price_request, service_provider, estimated_price),
+	primary key (initial_order_id, initial_order_estimation_price_request, service_provider),
 	foreign key (service_provider) references service_provider(username),
 	foreign key (initial_order_id, initial_order_estimation_price_request) references initial_order(id, estimation_price_request)
 );
