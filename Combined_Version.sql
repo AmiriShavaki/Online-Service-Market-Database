@@ -367,7 +367,8 @@ insert into s_service(s_name)
 values (N'تعمیر ماشین ایران خودرو'), (N'تعمیر ماشین رنو'), (N'تعمیر ماشین پراید'),
 	(N'تعمیر ماشین پژو'), (N'تعمیر کابینت'), (N'تعمیر سینک'), (N'تعمیر لوله آشپزخونه'),
 	(N'تعمیرات موبایل'), (N'تعمیرات کامپیوتر'), (N'تعمیرات کنسول بازی'), (N'تعمیر تلویزیون'),
-	(N'شستن پنجره'), (N'تعمیرات لپتاپ'), (N'نظافت کف منزل'), (N'تعمیر  آب گرم کن');
+	(N'شستن پنجره'), (N'تعمیرات لپتاپ'), (N'نظافت کف منزل'), (N'تعمیر  آب گرم کن'), 
+	(N'آبیاری گیاهان دریایی');
 
 /*provides*/
 insert into provides(service_names,service_provider_username)
@@ -375,7 +376,11 @@ values (N'تعمیر ماشین ایران خودرو','Mohsen_Hosseini'), (N'ت
 	(N'تعمیر  آب گرم کن','SamanMR'), (N'تعمیر کابینت','MHashemi1379'), 
 	(N'تعمیر ماشین رنو','Mohsen_Hosseini'), (N'تعمیر ماشین رنو','NoandishaneSaee'),
 	(N'تعمیر ماشین ایران خودرو','NoandishaneSaee'), (N'تعمیر تلویزیون ','Ayandeh_Ziba'),
-	(N'تعمیر کابینت','Nasiri'), (N'تعمیر کابینت','RezMosav');
+	(N'تعمیر کابینت','Nasiri'), (N'تعمیر کابینت','RezMosav'), 
+	(N'شستن پنجره','NoandishaneSaee'), (N'آبیاری گیاهان دریایی','NoandishaneSaee'),
+	(N'تعمیر سینک', 'Ayandeh_Ziba'), (N'نظافت کف منزل', 'Ayandeh_Ziba'),
+	(N'تعمیرات لپتاپ', 'PorkaranePortalash'), (N'تعمیرات کامپیوتر', 'PorkaranePortalash'),
+	(N'تعمیرات کنسول بازی', 'PorkaranePortalash');
 
 --select * from provides;
 
@@ -701,6 +706,23 @@ select * from show_all_of_clients('MHashemi1379');
 select * from show_all_of_clients('Mohsen_Hosseini');
 
 drop function show_all_of_clients;
+
+go
+create function show_all_services(@managerLastName varchar(50)) returns table as
+return (
+select service_names
+from provides, sp1, company, company_manager
+where service_provider_username = sp1.username and sp1.username = company.username and 
+	company.username = company_username and last_name = @managerLastName
+);
+go
+
+-- for example
+select * from show_all_services('Shoeibi');
+select * from show_all_services('Ziaee');
+select * from show_all_services('Rahmani');
+
+drop function show_all_services;
 
 /*------------------------drop table--------------------------- */
 
