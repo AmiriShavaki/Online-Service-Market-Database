@@ -626,6 +626,27 @@ select * from electric_service;
 select * from device;
 select * from cleaning_service;
 select * from position;
+
+/*------------------------Views--------------------------- */
+go
+create view service_provider_profiles(username, address_on_social_networks, license_number, avg_rating,
+										avg_price, number_of_completed_services) as
+select p.service_provider, sp2.address_on_social_networks, sp4.licence_number,
+	avg(cast(rating as float)) as Average_Rating, avg(price) as Average_Price, 
+	count(p.service_provider) as Number_of_completed_services
+from ((((finalized_order inner join initial_order on initial_order.id = initial_order_id) 
+	inner join picks p on initial_order.id = p.initial_order_id) 
+	inner join estimate_price e on p.initial_order_id = e.initial_order_id and p.service_provider = e.service_provider)
+	left join sp2 on sp2.username = p.service_provider) left join sp4 on sp4.username = p.service_provider
+group by p.service_provider, sp2.address_on_social_networks, sp4.licence_number;
+go
+
+select * from service_provider_profiles;
+
+drop view service_provider_profiles;
+
+/*------------------------Functions--------------------------- */
+
 /*------------------------drop table--------------------------- */
 
 
