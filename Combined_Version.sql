@@ -671,6 +671,112 @@ select * from show_all_username_passwords;
 
 drop view show_all_username_passwords;
 
+
+
+
+go
+create view long_term_contract_serviceproviders_income_avg_vs_total_income_avg(register_time,minuatesUntilEnd,client,service_provider,phone_number,licence_of_serivce_provider,avgServiceProviderIncomeAgainstTotal)
+as
+select register_time,priod,client,s1.username,phone_number,licence_number,avg(estimated_price)/tb2.total_estimated_price
+from (((long_term_contract l inner join sp1 as s1 on l.service_provider=s1.username)
+inner join estimate_price ep on ep.service_provider=s1.username)
+inner join sp3 as s3 on s3.username=s1.username)
+inner join sp4 as s4 on s4.username = s1.username
+,(select avg(estimated_price) as total_estimated_price from estimate_price) as tb2
+group by register_time,priod,client,s1.username,phone_number,licence_number,total_estimated_price
+go
+
+select * from long_term_contract_serviceproviders_income_avg_vs_total_income_avg
+
+drop view long_term_contract_serviceproviders_income_avg_vs_total_income_avg;
+
+
+
+/*tedad long_term_contract_haye_emsal_be_kol_sal ha*/
+
+go
+create  view sp_with_most_finalized_order_vs_total(nesbat_longTermContract_haye_emsal_be_kol)
+as 
+select cast(tb1.x1 as float)/cast(tb2.x2 as float) from
+(select count(*) as x1
+from long_term_contract
+where Year(register_time)=Year(GETDATE())) as tb1
+,(select count(*) as x2 from long_term_contract) as tb2
+go
+
+select * from sp_with_most_finalized_order_vs_total;
+
+drop view sp_with_most_finalized_order_vs_total;
+
+
+/* 2 service provider haie ke bishtarin order ra darand che avg(rating) darand*/
+
+go
+create view most_wanted_serviceProviders_rate(avg_rating_of_most_wanted_serive_providers)
+as 
+select avg(avg_rate) from 
+(select top 2 sp1.username,avg(finalized_order.rating) as avg_rate from sp1,finalized_order,initial_order,estimate_price
+where finalized_order.initial_order_id=initial_order.id
+and initial_order.id=estimate_price.initial_order_id
+and estimate_price.service_provider=sp1.username
+group by sp1.username
+order by count(*)) as tb1
+go
+
+select * from most_wanted_serviceProviders_rate;
+drop view most_wanted_serviceProviders_rate;
+
+
+/*price va rate sp hayie ke finalized order haye bishtari darand*/
+
+go
+create view price_rate_service_providers(Service_provider,avg_Price,avg_rate)
+as 
+select sp1.username, avg(finalized_order.price),avg(finalized_order.rating)
+from picks,initial_order,sp1,estimate_price,finalized_order
+where finalized_order.initial_order_id=initial_order.id
+and initial_order.id=estimate_price.initial_order_id
+and estimate_price.service_provider=sp1.username
+and sp1.username = picks.service_provider
+group by sp1.username
+go
+
+select * from price_rate_service_providers;
+drop view price_rate_service_providers;
+
+
+/*daramad service provider ha az order ha ta be inja sort shode*/
+go 
+create view income_service_provider(service_provider,incomeUntilNow)
+as
+select top 5 sp1.username,sum(finalized_order.price)
+from sp1,finalized_order,initial_order,picks
+where sp1.username=picks.service_provider
+and picks.initial_order_id=initial_order.id
+and initial_order.id=finalized_order.initial_order_id
+group by sp1.username
+order by sum(finalized_order.price) desc;
+go
+
+select * from income_service_provider;
+drop view income_service_provider;
+
+
+/*client hayie ke bishtarin kharid ra be lahaz hazine anjam dadan*/
+go
+create view bishtarin_kharid_clinet(client,price)
+as
+select top 2 cl1.username,sum(finalized_order.price)
+from cl1,picks,initial_order,finalized_order
+where cl1.username=picks.client
+and picks.initial_order_id=initial_order.id
+and initial_order.id=finalized_order.initial_order_id
+group by cl1.username
+order by sum(finalized_order.price) desc;
+go
+
+select * from bishtarin_kharid_clinet;
+drop view bishtarin_kharid_clinet;
 /*------------------------Functions--------------------------- */
 
 go
@@ -733,6 +839,84 @@ select * from show_all_services('Rahmani');
 
 drop function show_all_services;
 
+
+
+
+
+go
+create procedure find_lowest_price_of_estimated_prices @initial_order_id int
+as
+select min(estimated_price) as MinimumEstimated_price
+from estimate_price,initial_order
+where estimate_price.initial_order_id=initial_order.id
+and initial_order.id= @initial_order_id
+go
+
+--examples
+select *
+from estimate_price,initial_order
+where estimate_price.initial_order_id=initial_order.id;
+
+exec find_lowest_price_of_estimated_prices @initial_order_id = 10000;
+exec find_lowest_price_of_estimated_prices @initial_order_id = 10001;
+exec find_lowest_price_of_estimated_prices @initial_order_id = 10002;
+exec find_lowest_price_of_estimated_prices @initial_order_id = 10003;
+
+drop procedure find_lowest_price_of_estimated_prices;
+
+
+/*esm vehicle ro migirad va khoroji service haye mokhtalefi ke mishe rosh anjam 
+mishavad ro khoroji mide*/
+go
+create procedure servicesForThisCar @vehicle_name nvarchar(100)
+as
+select * 
+from vehicle
+where vehicle.vehicle_name=@vehicle_name;
+go
+
+--examples
+select * from vehicle;
+exec servicesForThisCar @vehicle_name=N'سمند';
+exec servicesForThisCar @vehicle_name='405';
+exec servicesForThisCar @vehicle_name='2008';
+exec servicesForThisCar @vehicle_name=N'تندر';
+
+drop procedure servicesForThisCar;
+
+go
+create procedure darsad_carService_be_Service_ha
+as
+select cast(tb1.x1 as float)/cast(tb2.x2 as float)
+from
+(select count(*) as x1 from car_service) as tb1,
+(select count(*) as x2 from s_service) as tb2
+go
+
+
+--example
+select * from s_service;
+select * from car_service
+exec darsad_carService_be_Service_ha;
+
+drop procedure darsad_carService_be_Service_ha;
+
+
+/*esm service ro midim va mibinim che service provider hayie oon ro tamin mikonan*/
+go 
+create procedure service_providers_for_this_service @service_name nvarchar(100)
+as
+select sp1.username
+from sp1,provides
+where provides.service_provider_username=sp1.username
+and provides.service_names=@service_name
+go
+
+--example
+select * from provides
+
+exec service_providers_for_this_service @service_name=N'تعمیر کابینت';
+drop procedure service_providers_for_this_service;
 /*------------------------drop table--------------------------- */
 
 
