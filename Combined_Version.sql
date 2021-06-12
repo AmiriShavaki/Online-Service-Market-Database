@@ -662,6 +662,15 @@ select * from client_past_orders_insight order by total_spent_price desc;
 
 drop view client_past_orders_insight;
 
+go
+create view show_all_username_passwords(username, passwrd) as
+select username, passwrd from sp1 union select username, passwrd from cl1
+go
+
+select * from show_all_username_passwords;
+
+drop view show_all_username_passwords;
+
 /*------------------------Functions--------------------------- */
 
 go
