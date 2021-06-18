@@ -651,6 +651,20 @@ select * from dbo.car_repairmans;
 drop view dbo.car_repairmans;
 
 go
+create view dbo.service_providers_phone_numbers(service_names,service_provider_username,phone_number)
+with schemabinding as
+select service_names,service_provider_username,phone_number
+from dbo.provides, dbo.sp1, dbo.sp3
+where service_provider_username=dbo.sp1.username and dbo.sp3.username = dbo.sp1.username
+go
+
+create unique clustered index idx_car_repairmans on dbo.service_providers_phone_numbers(service_names,service_provider_username);
+
+select * from dbo.service_providers_phone_numbers;
+
+drop view dbo.service_providers_phone_numbers;
+
+go
 create view service_provider_profiles(username, address_on_social_networks, license_number, avg_rating,
 										avg_price, number_of_completed_services) as
 select p.service_provider, sp2.address_on_social_networks, sp4.licence_number,
