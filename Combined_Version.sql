@@ -967,6 +967,14 @@ drop procedure service_providers_for_this_service;
 
 /*------------------------triggers-----------------------------*/
 
+go
+create trigger dbo.refuseManyInitOrders on dbo.initial_order after insert as if exists(select *
+from dbo.initial_order initO, dbo.cl1 c, inserted, dbo.finalized_order 
+where inserted.estimation_price_request = c.username and
+initO.estimation_price_request = c.username and not initO.id in 
+(select dbo.finalized_order.id from dbo.finalized_order)) begin 
+raiserror('This client has unfinished initial order from past', 16, 1); rollback transaction; return end;
+go
 
 /*agar satr jadidi dar jadval pick insert shavad --> haman sefaresh bayad dar finalized order niz dide shavad.*/
 go
