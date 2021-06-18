@@ -633,6 +633,23 @@ select * from cleaning_service;
 select * from position;
 
 /*------------------------Views--------------------------- */
+
+go
+create view dbo.car_repairmans(username, passwrd, start_year, location_range_of_service, service_provider_username, c_service_name)
+with schemabinding as
+select username, passwrd, start_year, location_range_of_service, service_provider_username, c_service_name
+from dbo.sp1 ,dbo.provides,dbo.car_service,dbo.s_service
+where dbo.sp1.username=dbo.provides.service_provider_username
+and dbo.provides.service_names=dbo.s_service.s_name
+and dbo.s_service.s_name=dbo.car_service.c_service_name
+go
+
+create unique clustered index idx_car_repairmans on dbo.car_repairmans(username, c_service_name);
+
+select * from dbo.car_repairmans;
+
+drop view dbo.car_repairmans;
+
 go
 create view service_provider_profiles(username, address_on_social_networks, license_number, avg_rating,
 										avg_price, number_of_completed_services) as
