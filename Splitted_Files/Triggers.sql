@@ -2,12 +2,20 @@
 
 go
 create trigger dbo.refuseManyInitOrders on dbo.initial_order after insert as if exists(select *
-from dbo.initial_order initO, dbo.cl1 c, inserted, dbo.finalized_order 
-where inserted.estimation_price_request = c.username and
-initO.estimation_price_request = c.username and not initO.id in 
-(select dbo.finalized_order.id from dbo.finalized_order)) begin 
+from dbo.initial_order initO, inserted, dbo.finalized_order 
+where inserted.estimation_price_request = initO.estimation_price_request and inserted.id <> initO.id and
+not exists(select * from dbo.finalized_order where dbo.finalized_order.initial_order_id = initO.id)) begin 
 raiserror('This client has unfinished initial order from past', 16, 1); rollback transaction; return end;
 go
+
+select * from initial_order;
+select * from finalized_order;
+insert into initial_order(description_of_requested_work, estimation_price_request)
+values (N'کابینتامون آهنیه درش زنگ زده نیاز به رنگ و سرویس مجدد داره', 'MeliNo');
+select * from initial_order;
+select * from finalized_order;
+insert into initial_order(description_of_requested_work, estimation_price_request)
+values (N'از ديشب پي اس فورمون روشن نميشه هركاري كرديم توروخدا كمك كنين تازه خريدمش', 'MeliNo');
 
 /*agar satr jadidi dar jadval pick insert shavad --> haman sefaresh bayad dar finalized order niz dide shavad.*/
 go
@@ -56,7 +64,7 @@ values('MeliNo',10003,'MeliNo','RezMosav');
 select * from picks;
 select * from finalized_order;
 
-delete from finalized_order where id=11;
+delete from finalized_order where id=9;
 delete from picks where initial_order_id=10003 and service_provider='RezMosav';
 
 /*--------------------------------------------------*/
