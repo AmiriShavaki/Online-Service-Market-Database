@@ -665,6 +665,20 @@ select * from dbo.service_providers_phone_numbers;
 drop view dbo.service_providers_phone_numbers;
 
 go
+create view dbo.electric_service_and_devices(device_name, electric_service)
+with schemabinding as
+select device_name, electric_service from dbo.electric_service inner join dbo.device 
+on dbo.device.electric_service=dbo.electric_service.e_service_name
+go
+
+create unique clustered index idx_electric_service_and_devices on 
+dbo.electric_service_and_devices(device_name);
+
+select * from dbo.electric_service_and_devices;
+
+drop view dbo.electric_service_and_devices;
+
+go
 create view service_provider_profiles(username, address_on_social_networks, license_number, avg_rating,
 										avg_price, number_of_completed_services) as
 select p.service_provider, sp2.address_on_social_networks, sp4.licence_number,
